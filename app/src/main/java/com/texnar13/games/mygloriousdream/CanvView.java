@@ -58,11 +58,11 @@ public class CanvView extends View {
         viewHeight = h;
     }
 
-    //вывод гарафики
+    // обновление экрана
     void update() {
-        //
+        //обновление спрайта
         eyeSprite.update(timerInterval);
-
+        // обновление экрана
         invalidate();
     }
 
@@ -70,9 +70,8 @@ public class CanvView extends View {
     //вывод графики
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
-        super.onDraw(canvas);
-        super.onDraw(canvas);
         // цвет фона
         canvas.drawARGB(250, 127, 199, 255);
         // отрисовка спрайта
