@@ -1,4 +1,4 @@
-package com.texnar13.games.mygloriousdream;
+package com.texnar13.games.mygloriousdream.myPac;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
