@@ -1,58 +1,50 @@
 package com.texnar13.games.mygloriousdream;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener {
+import com.texnar13.games.mygloriousdream.gameObjects.Flat;
+
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     // ----- элементы управления -----
     DrawView drawView;
 
-    Button buttonTopLeft;
-    Button buttonTopCenter;
-    Button buttonTopRight;
-    Button buttonCenterLeft;
-    Button buttonCenterCenter;
-    Button buttonCenterRight;
-    Button buttonBottomLeft;
-    Button buttonBottomCenter;
-    Button buttonBottomRight;
-
-    // ----- игровые обьекты -----
-    Flat flat;
+    TextView logText;
+    Handler controllerHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //drawView = new DrawView(this);
+
         //setContentView(drawView);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);//drawView = new DrawView(this);
+        logText = (TextView) findViewById(R.id.logText);
+
 
         // --- ставим обработчики касаний ---
         drawView = (DrawView) findViewById(R.id.activity_main_draw_view);
+        drawView.setOnTouchListener(this);
 
-        buttonTopLeft = (Button) findViewById(R.id.activity_main_button_left_top);
-        buttonTopLeft.setOnClickListener(this);
-        buttonTopCenter = (Button) findViewById(R.id.activity_main_button_center_top);
-        buttonTopCenter.setOnClickListener(this);
-        buttonTopRight = (Button) findViewById(R.id.activity_main_button_right_top);
-        buttonTopRight.setOnClickListener(this);
-        buttonCenterLeft = (Button) findViewById(R.id.activity_main_button_left_center);
-        buttonCenterLeft.setOnClickListener(this);
-        buttonCenterCenter = (Button) findViewById(R.id.activity_main_button_center_center);
-        buttonCenterCenter.setOnClickListener(this);
-        buttonCenterRight = (Button) findViewById(R.id.activity_main_button_right_center);
-        buttonCenterRight.setOnClickListener(this);
-        buttonBottomLeft = (Button) findViewById(R.id.activity_main_button_left_bottom);
-        buttonBottomLeft.setOnClickListener(this);
-        buttonBottomCenter = (Button) findViewById(R.id.activity_main_button_center_bottom);
-        buttonBottomCenter.setOnClickListener(this);
-        buttonBottomRight = (Button) findViewById(R.id.activity_main_button_right_bottom);
-        buttonBottomRight.setOnClickListener(this);
+//        // даем возможность игровому потоку обращаться сюда
+//        controllerHandler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                if (msg.what == 0) {
+//                    if (logText != null)
+//                        logText.setText((String) msg.obj);
+//                }
+//            }
+//        };
+//        drawView.getDrawThread().controllerHandler = controllerHandler;
 
     }
 
@@ -63,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
+                //Toast.makeText(getApplicationContext(), "нажал, молодец!", Toast.LENGTH_SHORT).show();
+                drawView.getDrawThread().press(event.getX(), event.getY());
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 break;
@@ -71,37 +65,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             case MotionEvent.ACTION_POINTER_UP:
                 break;
             case MotionEvent.ACTION_UP:
+                drawView.getDrawThread().release(event.getX(), event.getY());
                 break;
         }
         // обработали нажатие
         return true;
     }
 
-
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_main_button_left_top:
-                Toast.makeText(getApplicationContext(),"влево вверх",Toast.LENGTH_SHORT).show();
+    protected void onDestroy() {
+        super.onDestroy();
 
-                break;
-            case R.id.activity_main_button_center_top:
-                break;
-            case R.id.activity_main_button_right_top:
-                break;
-            case R.id.activity_main_button_left_center:
-                break;
-            case R.id.activity_main_button_center_center:
-                break;
-            case R.id.activity_main_button_right_center:
-                break;
-            case R.id.activity_main_button_left_bottom:
-                break;
-            case R.id.activity_main_button_center_bottom:
-                break;
-            case R.id.activity_main_button_right_bottom:
-                break;
-        }
     }
+
+
 }
 

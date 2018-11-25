@@ -53,4 +53,5 @@ public class DrawView extends SurfaceView implements SurfaceHolder.Callback {
     public DrawThread getDrawThread() {
         return this.drawThread;
     }
+
 }

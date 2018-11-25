@@ -12,69 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:text="TextView"
+        android:textColor="#000000" />
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow>
-
-                <Button
-                    android:id="@+id/activity_main_button_left_top"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:id="@+id/activity_main_button_center_top"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:id="@+id/activity_main_button_right_top"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-            </TableRow>
-
-            <TableRow>
-
-                <Button
-                    android:id="@+id/activity_main_button_left_center"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:id="@+id/activity_main_button_center_center"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:id="@+id/activity_main_button_right_center"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-            </TableRow>
-
-            <TableRow>
-
-                <Button
-                    android:id="@+id/activity_main_button_left_bottom"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:id="@+id/activity_main_button_center_bottom"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:id="@+id/activity_main_button_right_bottom"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
 </RelativeLayout>
