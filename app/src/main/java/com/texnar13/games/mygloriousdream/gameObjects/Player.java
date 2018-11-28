@@ -17,7 +17,7 @@ public class Player implements GameObject {// todo ввести основные
     private Rect[][] framesCoordinates;
     // состояние спрайта игрока (0 - на нас, 1 - в право, 2 - от нас, 3 - в лево, 4 - спец)(для графики)
     private int state = 0;
-    // время на кадр
+    // время на кадр для графики
     int frameTimeMillis = 125;//8 кадров в секунду
     // номер текущего кадра
     private int currentFrame = 0;
@@ -63,8 +63,8 @@ public class Player implements GameObject {// todo ввести основные
         frameCoordinates.set(
                 (int) (position.x / 100),
                 (int) (position.y / 100),
-                (int) (position.x / 100 + (framesCoordinates[state][currentFrame].right - framesCoordinates[state][currentFrame].left) * 5),
-                (int) (position.y / 100 + (framesCoordinates[state][currentFrame].bottom - framesCoordinates[state][currentFrame].top) * 5)
+                (int) (position.x / 100 + (framesCoordinates[state][currentFrame].right - framesCoordinates[state][currentFrame].left )*25),
+                (int) (position.y / 100 + (framesCoordinates[state][currentFrame].bottom - framesCoordinates[state][currentFrame].top )*25)
         );
         // рисуем кадр
         canvas.drawBitmap(
@@ -122,7 +122,7 @@ public class Player implements GameObject {// todo ввести основные
                 long nowTime = System.currentTimeMillis();
                 // ------ расчитываем физику ------
                 // --- позиция и скорость ---
-                if(nowTime - lastSeries>=1) {
+                if (nowTime - lastSeries >= 1) {
                     calculateCurrentPositionAndVelocityByLastAccelerationVelocityAndTime(nowTime - lastSeries);
                 }
                 // --- закончили работать со временем, оно стало прошлым ---
@@ -142,7 +142,6 @@ public class Player implements GameObject {// todo ввести основные
                         state = 3;
                     }
                 }
-
 
 
                 // --- номер кадра ---

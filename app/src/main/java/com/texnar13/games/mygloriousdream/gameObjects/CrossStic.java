@@ -14,7 +14,7 @@ public class CrossStic {// крестовина
     //|<-  ->|
     //|  ||  |
     // ----- константы -----
-    static final int BUTTON_SIZE = 300;
+    static final int BUTTON_SIZE = 200;
 
     // -- смещение стика по осям --
     float offsetX = 0;

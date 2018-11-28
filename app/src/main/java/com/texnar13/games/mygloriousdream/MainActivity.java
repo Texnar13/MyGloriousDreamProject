@@ -33,17 +33,19 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         drawView = (DrawView) findViewById(R.id.activity_main_draw_view);
         drawView.setOnTouchListener(this);
 
-//        // даем возможность игровому потоку обращаться сюда
-//        controllerHandler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                if (msg.what == 0) {
-//                    if (logText != null)
-//                        logText.setText((String) msg.obj);
-//                }
-//            }
-//        };
+        // даем возможность игровому потоку обращаться сюда
+        controllerHandler = new Handler() {
+
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == 0) {
+                    if (logText != null)
+                        logText.setText((String) msg.obj);
+                }
+            }
+        };
 //        drawView.getDrawThread().controllerHandler = controllerHandler;
 
     }

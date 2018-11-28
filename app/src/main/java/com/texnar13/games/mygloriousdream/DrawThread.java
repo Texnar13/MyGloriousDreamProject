@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.widget.TextView;
@@ -37,45 +38,56 @@ public class DrawThread extends Thread {
 
     // отрисовываемая очередь (односвязный список обьектов с интерфейсом рисуемое/потомками gameObject ) еще задать приоритеты отрисовки
 
-    // конструктор
+// ================================= конструктор =================================
+
     DrawThread(Context context, SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
-        // --- ставим поле ---
-        Bitmap flatBackground = BitmapFactory.decodeResource(context.getResources(), R.drawable.yellow_stones);
+
+// --- ставим поле ---
+        BitmapFactory.Options flatOptions = new BitmapFactory.Options();
+        flatOptions.inScaled = false;
+
+        Bitmap flatBackground = BitmapFactory.decodeResource(context.getResources(), R.drawable.grass_block_texture, flatOptions);
         flat = new Flat(flatBackground);
-        // --- выводим игрока ---
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        //options.inScaled = false; todo все изображения приходят в разрешении в 4 раза выше
-        Bitmap playerForwardImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.hero_try_all, options);
-        Log.e("GloriousDream", "playerForwardImage" + flatBackground.getHeight());
+
+// --- выводим игрока ---
+        BitmapFactory.Options playerOptions = new BitmapFactory.Options();
+        playerOptions.inScaled = false;
+
+        Bitmap playerForwardImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.hero_try_all, playerOptions);
+        Log.e("GloriousDream", "playerForwardImage" + playerForwardImage.getWidth());
         // кадры
         Rect[][] playerFramesCoordinates = new Rect[5][5];// 0 - стоит, 1-4 - движется
         for (int i = 5; i > 0; i--) {
             for (int j = 0; j < 5; j++) {
                 playerFramesCoordinates[5 - i][j] = new Rect();
                 playerFramesCoordinates[5 - i][j].set(
-                        playerForwardImage.getWidth() / 5 * j,
-                        playerForwardImage.getWidth() / 5 * (i - 1),
-                        playerForwardImage.getWidth() / 5 * (j + 1),
-                        playerForwardImage.getHeight() / 5 * i
+                        (playerForwardImage.getWidth() - 24) / 5 * j,
+                        (playerForwardImage.getHeight() - 24) / 5 * (i - 1),
+                        (playerForwardImage.getWidth() - 24) / 5 * (j + 1),
+                        (playerForwardImage.getHeight() - 24) / 5 * i
                 );
+                Log.e("wtf", "-----" + ((playerForwardImage.getWidth() - 24) / 5 * j) + "-----" +
+                        ((playerForwardImage.getWidth() - 24) / 5 * (i - 1)) + "-----" +
+                        ((playerForwardImage.getWidth() - 24) / 5 * (j + 1)) + "-----" +
+                        ((playerForwardImage.getHeight() - 24) / 5 * i));
             }
         }
         player = new Player(
                 Bitmap.createBitmap(playerForwardImage, 0, 0, playerForwardImage.getWidth(), playerForwardImage.getHeight(), null, false),
-                playerFramesCoordinates, 1000, 1000);
+                playerFramesCoordinates, 10000, 10000);
 
-        // --- создаем крестовину ---
+// --- создаем крестовину ---
         stic = new CrossStic(50, 1200);
 
     }
 
-// -------- поток --------
+// ================================= поток =================================
 
     @Override
     public void run() {
         // время на кадр
-        int frameTimeMillis = 125;//8 кадров в секунду
+        int frameTimeMillis = 33;// 30 кадров (8 кадров в секунду 125)
         // время прошлого кадра
         long lastFrameTime = System.currentTimeMillis();
         // сейчас
@@ -165,7 +177,7 @@ public class DrawThread extends Thread {
         if (stic != null) {
             stic.release(new PointF(x, y));
 
-            player.setForce(0,0);
+            player.setForce(0, 0);
         }
     }
 }
